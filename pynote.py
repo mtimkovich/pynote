@@ -2,25 +2,21 @@
 import subprocess
 import sys
 
+BLUE = "\033[22;34m"
+GREEN = "\033[22;32m"
+BOLD = "\033[01;37m"
+EC = "\033[00;37m"
+
 NAMES = ["New", "Open", "List", "Delete", "Quit"]
 NOTES_PATH = "/home/max/Python/note/notes/"
 NOTE_DAT = ".names.dat"
 EDITOR = "vim"
 
-def bold(bool):
-    ESC = chr(27)
-    if bool == 1:
-        print(ESC + "[1m", end="")
-    else:
-        print(ESC + "[0m", end="")
-
 def title():
     print("[", end="")
     for i in range(0, len(NAMES)):
-        bold(1)
-        print(NAMES[i][0], end="")
-        bold(0)
-        print("-" + NAMES[i], end="")
+        print(BOLD + NAMES[i][0], end="")
+        print(EC + "-" + NAMES[i], end="")
         if i != len(NAMES)-1:
             print(" ", end="")
         else:
@@ -39,6 +35,7 @@ def store_note_name(note_name):
         file.close()
     except IOError:
         print("Could not write to `" + NOTE_DAT + "'", file=sys.stderr)
+        exit(1)
 
 def new_note():
     print("Enter note's name")
@@ -51,6 +48,19 @@ def new_note():
 
     store_note_name(note_name)
 
+def list_notes():
+    try:
+        file = open(NOTE_DAT, "r")
+        notes = file.read()
+        file.close()
+    except IOError:
+        print("Error writing `" + NOTE_DAT + "'", file=sys.stderr)
+        exit(1)
+
+    note_list = notes.splitlines()
+    for i in range(0, len(note_list)):
+        print(GREEN + str(i+1) + EC + " " + note_list[i])
+
 try:
     c = ""
     while c != "q":
@@ -60,7 +70,7 @@ try:
         elif c == "o":
             print("open file")
         elif c == "l":
-            print("list notes")
+            list_notes()
         elif c == "d":
             print("delete note")
         elif c == "q":
