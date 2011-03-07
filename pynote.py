@@ -1,6 +1,10 @@
 #!/usr/bin/env python
+import subprocess
+import sys
 
 NAMES = ["New", "Open", "List", "Delete", "Quit"]
+NOTES_PATH = "/home/max/Python/note/notes/"
+EDITOR = "vim"
 
 def bold(bool):
     ESC = chr(27)
@@ -26,11 +30,20 @@ def menu():
     answer = input("> ")
     return answer
 
+def newfile(filename):
+    try:
+        subprocess.call([EDITOR, NOTES_PATH + filename])
+    except OSError:
+        print("Error running `" + EDITOR + " " + NOTES_PATH + filename + "'", file=sys.stderr)
+
 c = ""
+filename = ""
 while c != "q":
     c = menu().lower()
     if c == "n":
-        print("new file")
+        print("Enter note's name")
+        filename = input("> ")
+        newfile(filename)
     elif c == "o":
         print("open file")
     elif c == "l":
