@@ -10,7 +10,7 @@ RESET = "\033[00;37m"
 OPTIONS = ["New", "Open", "List", "Delete", "Quit"]
 NOTES_PATH = "/home/max/Python/note/notes/"
 NOTE_DAT = "names.dat"
-EDITOR = "vim"
+EDITOR = os.environ["EDITOR"] or "vi"
 
 def title():
     print("[", end="")
@@ -47,13 +47,13 @@ def new_note():
         text = file.read()
         file.close()
     except IOError:
-        print(note_name + " not saved: ignoring")
+        print(note_name + " not saved: ignoring", file=sys.stderr)
         return
 
     if text:
         store_note_name(note_name)
     else:
-        print(note_name + " is empty, not saving")
+        print(note_name + " is empty, not saving", file=sys.stderr)
         os.unlink(NOTES_PATH + note_name)
         
 
