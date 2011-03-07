@@ -51,22 +51,23 @@ def new_note():
 
     store_note_name(note_name)
 
-c = ""
-note_name = ""
-while c != "q":
-    c = menu().lower()
-    if c == "n":
-        new_note()
-    elif c == "o":
-        print("open file")
-    elif c == "l":
-        print("list notes")
-    elif c == "d":
-        print("delete note")
-    elif c == "q":
-        exit(0)
-    else:
-        print("Unknown command")
+try:
+    c = ""
+    while c != "q":
+        c = menu().lower()
+        if c == "n":
+            new_note()
+        elif c == "o":
+            print("open file")
+        elif c == "l":
+            print("list notes")
+        elif c == "d":
+            print("delete note")
+        elif c == "q":
+            exit(0)
+        else:
+            print("Unknown command")
 
-    print()
-
+        print()
+except KeyboardInterrupt:
+    exit(0)
