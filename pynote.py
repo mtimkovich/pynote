@@ -3,7 +3,6 @@ import subprocess
 import sys
 import os
 
-# BLUE = "\033[22;34m"
 GREEN = "\033[22;32m"
 BOLD = "\033[01;37m"
 RESET = "\033[00;37m"
@@ -43,9 +42,13 @@ def new_note():
         print("Error running `" + EDITOR + " " + NOTES_PATH + note_name + "'", file=sys.stderr)
         return
 
-    file = open(NOTES_PATH + note_name)
-    text = file.read()
-    file.close()
+    try:
+        file = open(NOTES_PATH + note_name)
+        text = file.read()
+        file.close()
+    except IOError:
+        print(note_name + " not saved: ignoring")
+        return
 
     if text:
         store_note_name(note_name)
@@ -154,3 +157,4 @@ try:
         print()
 except KeyboardInterrupt:
     exit(0)
+
