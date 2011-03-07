@@ -30,7 +30,10 @@ def menu():
     answer = input("> ")
     return answer
 
-def newfile(filename):
+def newfile():
+    print("Enter note's name")
+    filename = input("> ")
+
     try:
         subprocess.call([EDITOR, NOTES_PATH + filename])
     except OSError:
@@ -41,9 +44,7 @@ filename = ""
 while c != "q":
     c = menu().lower()
     if c == "n":
-        print("Enter note's name")
-        filename = input("> ")
-        newfile(filename)
+        newfile()
     elif c == "o":
         print("open file")
     elif c == "l":
