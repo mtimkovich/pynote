@@ -4,6 +4,7 @@ import sys
 
 NAMES = ["New", "Open", "List", "Delete", "Quit"]
 NOTES_PATH = "/home/max/Python/note/notes/"
+NOTE_DAT = ".names.dat"
 EDITOR = "vim"
 
 def bold(bool):
@@ -30,21 +31,32 @@ def menu():
     answer = input("> ")
     return answer
 
-def newfile():
+def store_note_name(note_name):
+    try:
+        file = open(NOTE_DAT, "a")
+        file.write(note_name)
+        file.write("\n")
+        file.close()
+    except IOError:
+        print("Could not write to `" + NOTE_DAT + "'", file=sys.stderr)
+
+def new_note():
     print("Enter note's name")
-    filename = input("> ")
+    note_name = input("> ")
 
     try:
-        subprocess.call([EDITOR, NOTES_PATH + filename])
+        subprocess.call([EDITOR, NOTES_PATH + note_name])
     except OSError:
-        print("Error running `" + EDITOR + " " + NOTES_PATH + filename + "'", file=sys.stderr)
+        print("Error running `" + EDITOR + " " + NOTES_PATH + note_name + "'", file=sys.stderr)
+
+    store_note_name(note_name)
 
 c = ""
-filename = ""
+note_name = ""
 while c != "q":
     c = menu().lower()
     if c == "n":
-        newfile()
+        new_note()
     elif c == "o":
         print("open file")
     elif c == "l":
