@@ -9,7 +9,7 @@ EC = "\033[00;37m"
 
 NAMES = ["New", "Open", "List", "Delete", "Quit"]
 NOTES_PATH = "/home/max/Python/note/notes/"
-NOTE_DAT = ".names.dat"
+NOTE_DAT = "names.dat"
 EDITOR = "vim"
 
 def title():
@@ -21,11 +21,6 @@ def title():
             print(" ", end="")
         else:
             print("]")
-
-def menu():
-    title()
-    answer = input("> ")
-    return answer
 
 def store_note_name(note_name):
     try:
@@ -64,7 +59,9 @@ def list_notes():
 try:
     c = ""
     while c != "q":
-        c = menu().lower()
+        title()
+        c = input("> ").lower()
+
         if c == "n":
             new_note()
         elif c == "o":
