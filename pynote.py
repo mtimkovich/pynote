@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import subprocess
 import sys
+import os
 
-BLUE = "\033[22;34m"
+# BLUE = "\033[22;34m"
 GREEN = "\033[22;32m"
 BOLD = "\033[01;37m"
-EC = "\033[00;37m"
+RESET = "\033[00;37m"
 
 OPTIONS = ["New", "Open", "List", "Delete", "Quit"]
 NOTES_PATH = "/home/max/Python/note/notes/"
@@ -16,7 +17,7 @@ def title():
     print("[", end="")
     for i in range(0, len(OPTIONS)):
         print(BOLD + OPTIONS[i][0], end="")
-        print(EC + "-" + OPTIONS[i], end="")
+        print(RESET + "-" + OPTIONS[i], end="")
         if i != len(OPTIONS)-1:
             print(" ", end="")
         else:
@@ -42,7 +43,16 @@ def new_note():
         print("Error running `" + EDITOR + " " + NOTES_PATH + note_name + "'", file=sys.stderr)
         return
 
-    store_note_name(note_name)
+    file = open(NOTES_PATH + note_name)
+    text = file.read()
+    file.close()
+
+    if text:
+        store_note_name(note_name)
+    else:
+        print(note_name + " is empty, not saving")
+        os.unlink(NOTES_PATH + note_name)
+        
 
 def open_note():
     print("Enter note's number")
@@ -62,15 +72,15 @@ def open_note():
         print("Error writing `" + NOTE_DAT + "'", file=sys.stderr)
         exit(1)
 
-    notes_list = notes.splitlines()
-    if c > len(notes_list):
+    note_list = notes.splitlines()
+    if c > len(note_list):
         print("Invalid input")
         return
 
     try:
-        subprocess.call([EDITOR, NOTES_PATH + notes_list[c]])
+        subprocess.call([EDITOR, NOTES_PATH + note_list[c]])
     except OSError:
-        print("Error running `" + EDITOR + " " + NOTES_PATH + notes_list[c] + "'", file=sys.stderr)
+        print("Error running `" + EDITOR + " " + NOTES_PATH + note_list[c] + "'", file=sys.stderr)
         return
 
 def list_notes():
@@ -84,13 +94,49 @@ def list_notes():
 
     note_list = notes.splitlines()
     for i in range(0, len(note_list)):
-        print(GREEN + str(i) + EC + " " + note_list[i])
+        print(GREEN + str(i) + RESET + " " + note_list[i])
+
+def delete_note():
+    print("Enter note's number")
+
+    c = 0
+    try:
+        c = int(input("> "))
+    except ValueError:
+        print("Invalid input")
+        return
+
+    try:
+        file = open(NOTE_DAT, "r")
+        notes = file.read()
+        file.close()
+    except IOError:
+        print("Error writing `" + NOTE_DAT + "'", file=sys.stderr)
+        exit(1)
+
+    note_list = notes.splitlines()
+    if c > len(note_list):
+        print("Invalid input")
+        return
+
+    os.unlink(NOTES_PATH + note_list[c])
+
+    del note_list[c]
+    try:
+        file = open(NOTE_DAT, "w")
+        for i in note_list:
+            file.write(i)
+            file.write("\n")
+        file.close()
+    except IOError:
+        print("Error writing `" + NOTE_DAT + "'", file=sys.stderr)
+        exit(1)
 
 try:
     c = ""
     while c != "q":
         title()
-        c = input("> ").lower()
+        c = input("> ").lower()[0]
 
         if c == "n":
             new_note()
@@ -99,7 +145,7 @@ try:
         elif c == "l":
             list_notes()
         elif c == "d":
-            print("delete note")
+            delete_note()
         elif c == "q":
             exit(0)
         else:
