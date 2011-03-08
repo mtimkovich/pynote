@@ -5,7 +5,7 @@ import os
 
 PATH = os.environ["HOME"] + "/.config/pynote/"
 NOTES_PATH = os.environ["HOME"] + "/.config/pynote/notes/"
-NOTE_DAT = os.environ["HOME"] + "/.config/pynote/names.dat"
+NOTE_DAT = os.environ["HOME"] + "/.config/pynote/notes.dat"
 
 OPTIONS = ["New", "Open", "List", "Delete", "Quit"]
 EDITOR = os.environ["EDITOR"] or "vi"
