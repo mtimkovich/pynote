@@ -3,14 +3,16 @@ import subprocess
 import sys
 import os
 
+PATH = os.environ["HOME"] + "/.config/pynote/"
+NOTES_PATH = os.environ["HOME"] + "/.config/pynote/notes/"
+NOTE_DAT = os.environ["HOME"] + "/.config/pynote/names.dat"
+
+OPTIONS = ["New", "Open", "List", "Delete", "Quit"]
+EDITOR = os.environ["EDITOR"] or "vi"
+
 GREEN = "\033[22;32m"
 BOLD = "\033[01;37m"
 RESET = "\033[00;37m"
-
-OPTIONS = ["New", "Open", "List", "Delete", "Quit"]
-NOTES_PATH = "/home/max/Python/note/notes/"
-NOTE_DAT = "names.dat"
-EDITOR = os.environ["EDITOR"] or "vi"
 
 def title():
     print("[", end="")
@@ -133,6 +135,22 @@ def delete_note():
         file.close()
     except IOError:
         print("Error writing `" + NOTE_DAT + "'", file=sys.stderr)
+        exit(1)
+
+############ Main ##############
+
+if not os.path.isdir(PATH):
+    try:
+        os.mkdir(PATH)
+    except OSError:
+        print("Error creating '" + PATH + "' directory", file=sys.stderr)
+        exit(1)
+
+if not os.path.isdir(NOTES_PATH):
+    try:
+        os.mkdir(NOTES_PATH)
+    except OSError:
+        print("Error creating '" + NOTES_PATH + "' directory", file=sys.stderr)
         exit(1)
 
 try:
