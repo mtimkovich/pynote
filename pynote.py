@@ -14,7 +14,6 @@ GREEN = "\033[22;32m"
 BOLD = "\033[01;37m"
 RESET = "\033[00;37m"
 
-
 def prompt():
     user = input("> ")
 
@@ -48,6 +47,10 @@ def new_note():
     try:
         note_name = prompt()
     except IOError:
+        return
+
+    if note_name > 255:
+        print("Note name is too long", file=sys.stderr)
         return
 
     try:
