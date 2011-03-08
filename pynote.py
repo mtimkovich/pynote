@@ -14,6 +14,15 @@ GREEN = "\033[22;32m"
 BOLD = "\033[01;37m"
 RESET = "\033[00;37m"
 
+
+def prompt():
+    user = input("> ")
+
+    if user == "" or user == "\n":
+        raise IOError
+    else:
+        return user
+
 def title():
     print("[", end="")
     for i in range(0, len(OPTIONS)):
@@ -36,7 +45,10 @@ def store_note_name(note_name):
 
 def new_note():
     print("Enter note's name")
-    note_name = input("> ")
+    try:
+        note_name = prompt()
+    except IOError:
+        return
 
     try:
         subprocess.call([EDITOR, NOTES_PATH + note_name])
@@ -64,9 +76,11 @@ def open_note():
 
     c = 0
     try:
-        c = int(input("> "))
+        c = int(prompt())
     except ValueError:
         print("Invalid input")
+        return
+    except IOError:
         return
 
     try:
@@ -78,7 +92,7 @@ def open_note():
         exit(1)
 
     note_list = notes.splitlines()
-    if c > len(note_list):
+    if c > len(note_list) or c < 0:
         print("Invalid input")
         return
 
@@ -106,9 +120,11 @@ def delete_note():
 
     c = 0
     try:
-        c = int(input("> "))
+        c = int(prompt())
     except ValueError:
         print("Invalid input")
+        return
+    except IOError:
         return
 
     try:
@@ -120,13 +136,13 @@ def delete_note():
         exit(1)
 
     note_list = notes.splitlines()
-    if c > len(note_list):
+    if c > len(note_list) or c < 0:
         print("Invalid input")
         return
 
     os.unlink(NOTES_PATH + note_list[c])
-
     del note_list[c]
+
     try:
         file = open(NOTE_DAT, "w")
         for i in note_list:
@@ -154,10 +170,14 @@ if not os.path.isdir(NOTES_PATH):
         exit(1)
 
 try:
-    c = ""
-    while c != "q":
+    while 1:
         title()
-        c = input("> ").lower()[0]
+        c = ""
+        try:
+            c = prompt().lower()[0]
+        except IOError:
+            print()
+            continue
 
         if c == "n":
             new_note()
