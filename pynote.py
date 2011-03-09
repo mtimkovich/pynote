@@ -49,7 +49,7 @@ def new_note():
     except IOError:
         return
 
-    if note_name > 255:
+    if len(note_name) > 255:
         print("Note name is too long", file=sys.stderr)
         return
 
@@ -72,7 +72,6 @@ def new_note():
     else:
         print(note_name + " is empty, not saving", file=sys.stderr)
         os.unlink(NOTES_PATH + note_name)
-        
 
 def open_note():
     print("Enter note's number")
