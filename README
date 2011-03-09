@@ -1,6 +1,6 @@
 Pynote
 
-This is a command-line note program written in Python. The notes are saved as text files in a centralized location, and the list of notes are stored in a single data file. The notes are edited using the user's $EDITOR program.
+This is a small console program written in Python. Pynote allows you to manage notes, which are stored as text files. The notes are edited using the user's $EDITOR program.
 
 -----------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ permitted provided that the following conditions are met:
 
 THIS SOFTWARE IS PROVIDED BY XEEEW ``AS IS'' AND ANY EXPRESS OR IMPLIED
 WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL xeeew OR
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL XEEEW OR
 CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
 CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
