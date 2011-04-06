@@ -7,7 +7,7 @@ PATH = os.environ["HOME"] + "/.config/pynote/"
 NOTES_PATH = os.environ["HOME"] + "/.config/pynote/notes/"
 NOTE_DAT = os.environ["HOME"] + "/.config/pynote/notes.dat"
 
-OPTIONS = ["New", "Open", "List", "Delete", "Quit"]
+OPTIONS = ["New", "List", "Delete", "Quit"]
 EDITOR = os.environ["EDITOR"] or "vi"
 
 GREEN = "\033[22;32m"
@@ -161,9 +161,11 @@ if not os.path.isdir(NOTES_PATH):
         exit(1)
 
 try:
+    first = 0
     while 1:
         title()
-        list_notes()
+        if first == 0:
+            list_notes()
         c = ""
         try:
             c = prompt().lower()[0]
@@ -185,6 +187,7 @@ try:
             print("Unknown command")
 
         print()
+        first = 1
 except KeyboardInterrupt:
     exit(0)
 
