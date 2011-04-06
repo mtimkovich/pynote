@@ -73,18 +73,7 @@ def new_note():
         print(note_name + " is empty, not saving", file=sys.stderr)
         os.unlink(NOTES_PATH + note_name)
 
-def open_note():
-    print("Enter note's number")
-
-    c = 0
-    try:
-        c = int(prompt())
-    except ValueError:
-        print("Invalid input")
-        return
-    except IOError:
-        return
-
+def open_note(c):
     try:
         file = open(NOTE_DAT, "r")
         notes = file.read()
@@ -110,8 +99,8 @@ def list_notes():
         notes = file.read()
         file.close()
     except IOError:
-        print("Error writing `" + NOTE_DAT + "'", file=sys.stderr)
-        exit(1)
+        print("You do not have any notes!")
+        return
 
     note_list = notes.splitlines()
     for i in range(0, len(note_list)):
@@ -174,6 +163,7 @@ if not os.path.isdir(NOTES_PATH):
 try:
     while 1:
         title()
+        list_notes()
         c = ""
         try:
             c = prompt().lower()[0]
@@ -181,10 +171,10 @@ try:
             print()
             continue
 
-        if c == "n":
+        if c.isdigit():
+            open_note(int(c))
+        elif c == "n":
             new_note()
-        elif c == "o":
-            open_note()
         elif c == "l":
             list_notes()
         elif c == "d":
