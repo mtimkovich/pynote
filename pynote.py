@@ -168,7 +168,7 @@ try:
             list_notes()
         c = ""
         try:
-            c = prompt().lower()
+            c = prompt().lower()[0]
         except IOError:
             print()
             continue
