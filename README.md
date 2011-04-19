@@ -1,4 +1,5 @@
-# Pynote
+Pynote
+======
 
 This is a command-line note program written in Python. The notes are saved as text files in a centralized location, and the list of notes are stored in a single data file. The notes are edited using the user's $EDITOR program.
 
