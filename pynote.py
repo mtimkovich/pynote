@@ -3,9 +3,9 @@ import subprocess
 import sys
 import os
 
-PATH = os.environ["HOME"] + "/.config/pynote/"
-NOTES_PATH = os.environ["HOME"] + "/.config/pynote/notes/"
-NOTE_DAT = os.environ["HOME"] + "/.config/pynote/notes.dat"
+PATH = os.environ["XDG_CONFIG_HOME"] + "/pynote/"
+NOTES_PATH = os.environ["XDG_CONFIG_HOME"] + "/pynote/notes/"
+NOTE_DAT = os.environ["XDG_CONFIG_HOME"] + "/pynote/notes.dat"
 
 OPTIONS = ["New", "List", "Delete", "Quit"]
 EDITOR = os.environ["EDITOR"] or "vi"
