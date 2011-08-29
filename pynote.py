@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 import subprocess
 import sys
 import os
@@ -83,7 +83,7 @@ def open_note(c):
         exit(1)
 
     note_list = notes.splitlines()
-    if c > len(note_list) or c < 0:
+    if c >= len(note_list) or c < 0:
         print("Invalid input")
         return
 
